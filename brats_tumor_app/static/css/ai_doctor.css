@@ -1,0 +1,483 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    color: #333;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 40px;
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+header h1 {
+    color: #2c5aa0;
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+header p {
+    color: #666;
+    font-size: 1.1em;
+}
+
+.main-content {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.tabs {
+    display: flex;
+    background: #f8f9fa;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.tab-button {
+    flex: 1;
+    padding: 20px;
+    border: none;
+    background: none;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.tab-button:hover {
+    background: #e9ecef;
+}
+
+.tab-button.active {
+    background: white;
+    color: #2c5aa0;
+    font-weight: 600;
+    border-bottom: 3px solid #2c5aa0;
+}
+
+.tab-content {
+    display: none;
+    padding: 30px;
+    animation: fadeIn 0.3s ease-in;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.patient-info-form, .symptoms-section, .medical-history-section, 
+.vital-signs-section, .upload-section {
+    margin-bottom: 30px;
+}
+
+h2 {
+    color: #2c5aa0;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+}
+
+h3 {
+    color: #495057;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 8px;
+    color: #495057;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group select {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1em;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #2c5aa0;
+}
+
+textarea {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1em;
+    resize: vertical;
+    transition: border-color 0.3s ease;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: #2c5aa0;
+}
+
+.quick-symptoms {
+    margin-top: 20px;
+}
+
+.symptom-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.symptom-tag {
+    padding: 8px 16px;
+    background: #e3f2fd;
+    color: #1976d2;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.symptom-tag:hover {
+    background: #1976d2;
+    color: white;
+}
+
+.diagnose-btn, .action-btn {
+    background: #2c5aa0;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.1em;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 20px auto;
+}
+
+.diagnose-btn:hover, .action-btn:hover {
+    background: #1e3d6f;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(44, 90, 160, 0.3);
+}
+
+.results-section {
+    margin-top: 30px;
+    padding: 25px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    border: 1px solid #e9ecef;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+.upload-area {
+    border: 2px dashed #cbd5e0;
+    border-radius: 10px;
+    padding: 60px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: #f8f9fa;
+}
+
+.upload-area:hover {
+    border-color: #2c5aa0;
+    background: #e3f2fd;
+}
+
+.upload-area.dragover {
+    border-color: #2c5aa0;
+    background: #e3f2fd;
+}
+
+.upload-icon {
+    font-size: 3em;
+    color: #cbd5e0;
+    margin-bottom: 20px;
+}
+
+.file-types {
+    color: #718096;
+    font-size: 0.9em;
+    margin-top: 10px;
+}
+
+.loading-section {
+    text-align: center;
+    padding: 50px;
+}
+
+.spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #2c5aa0;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.tumor-visualization {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin: 20px 0;
+}
+
+.slice-viewer {
+    background: #000;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.slice-viewer img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.slice-controls {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: rgba(0,0,0,0.7);
+    padding: 10px 20px;
+    border-radius: 25px;
+}
+
+.slice-controls button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.2em;
+    cursor: pointer;
+    padding: 5px 10px;
+}
+
+.slice-controls button:hover {
+    background: rgba(255,255,255,0.2);
+    border-radius: 5px;
+}
+
+#slice-info {
+    color: white;
+    min-width: 100px;
+    text-align: center;
+}
+
+#slice-slider {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.tumor-stats {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.stat-item:last-child {
+    border-bottom: none;
+}
+
+.stat-label {
+    font-weight: 500;
+    color: #495057;
+}
+
+.stat-value {
+    font-weight: 600;
+    color: #2c5aa0;
+}
+
+.analysis-section {
+    margin-top: 20px;
+    padding: 20px;
+    background: #e3f2fd;
+    border-radius: 10px;
+}
+
+.history-list {
+    display: grid;
+    gap: 20px;
+}
+
+.history-item {
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    border: 1px solid #e9ecef;
+    transition: all 0.3s ease;
+}
+
+.history-item:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+}
+
+.history-date {
+    color: #666;
+    font-size: 0.9em;
+    margin-bottom: 10px;
+}
+
+.history-diagnosis {
+    font-weight: 600;
+    color: #2c5aa0;
+    margin-bottom: 5px;
+}
+
+.history-symptoms {
+    color: #495057;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 30px;
+    border-radius: 15px;
+    width: 80%;
+    max-width: 500px;
+    text-align: center;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+}
+
+.report-format-options {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.format-btn {
+    padding: 15px 30px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.format-btn:first-child {
+    background: #dc3545;
+    color: white;
+}
+
+.format-btn:first-child:hover {
+    background: #c82333;
+}
+
+.format-btn:last-child {
+    background: #007bff;
+    color: white;
+}
+
+.format-btn:last-child:hover {
+    background: #0056b3;
+}
+
+@media (max-width: 768px) {
+    .tumor-visualization {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+    }
+    
+    .report-format-options {
+        flex-direction: column;
+    }
+}

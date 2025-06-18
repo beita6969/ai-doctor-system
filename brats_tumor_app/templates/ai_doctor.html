@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI智能医生诊断系统</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/ai_doctor.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-stethoscope"></i> AI智能医生诊断系统</h1>
+            <p>提供智能诊断、处方开具、病历生成及脑肿瘤检测服务</p>
+        </header>
+
+        <div class="main-content">
+            <div class="tabs">
+                <button class="tab-button active" onclick="showTab('diagnosis')">
+                    <i class="fas fa-user-md"></i> 智能诊断
+                </button>
+                <button class="tab-button" onclick="showTab('tumor')">
+                    <i class="fas fa-brain"></i> 脑肿瘤检测
+                </button>
+                <button class="tab-button" onclick="showTab('history')">
+                    <i class="fas fa-history"></i> 诊断历史
+                </button>
+            </div>
+
+            <div id="diagnosis-tab" class="tab-content active">
+                <div class="patient-info-form">
+                    <h2>患者基本信息</h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="patient-name">姓名</label>
+                            <input type="text" id="patient-name" placeholder="请输入患者姓名">
+                        </div>
+                        <div class="form-group">
+                            <label for="patient-age">年龄</label>
+                            <input type="number" id="patient-age" placeholder="年龄" min="0" max="150">
+                        </div>
+                        <div class="form-group">
+                            <label for="patient-gender">性别</label>
+                            <select id="patient-gender">
+                                <option value="">请选择</option>
+                                <option value="男">男</option>
+                                <option value="女">女</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="patient-phone">联系电话</label>
+                            <input type="tel" id="patient-phone" placeholder="联系电话">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="symptoms-section">
+                    <h2>症状描述</h2>
+                    <textarea id="symptoms" rows="4" placeholder="请详细描述您的症状，如：头痛3天，伴有发热、咳嗽等"></textarea>
+                    
+                    <div class="quick-symptoms">
+                        <h3>快速选择常见症状</h3>
+                        <div class="symptom-tags">
+                            <span class="symptom-tag" onclick="addSymptom('头痛')">头痛</span>
+                            <span class="symptom-tag" onclick="addSymptom('发热')">发热</span>
+                            <span class="symptom-tag" onclick="addSymptom('咳嗽')">咳嗽</span>
+                            <span class="symptom-tag" onclick="addSymptom('胸闷')">胸闷</span>
+                            <span class="symptom-tag" onclick="addSymptom('腹痛')">腹痛</span>
+                            <span class="symptom-tag" onclick="addSymptom('恶心')">恶心</span>
+                            <span class="symptom-tag" onclick="addSymptom('呕吐')">呕吐</span>
+                            <span class="symptom-tag" onclick="addSymptom('头晕')">头晕</span>
+                            <span class="symptom-tag" onclick="addSymptom('乏力')">乏力</span>
+                            <span class="symptom-tag" onclick="addSymptom('失眠')">失眠</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="medical-history-section">
+                    <h2>病史信息</h2>
+                    <textarea id="medical-history" rows="3" placeholder="既往病史、过敏史、当前用药等（选填）"></textarea>
+                </div>
+
+                <div class="vital-signs-section">
+                    <h2>生命体征（选填）</h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="blood-pressure">血压 (mmHg)</label>
+                            <input type="text" id="blood-pressure" placeholder="如：120/80">
+                        </div>
+                        <div class="form-group">
+                            <label for="heart-rate">心率 (次/分)</label>
+                            <input type="number" id="heart-rate" placeholder="60-100">
+                        </div>
+                        <div class="form-group">
+                            <label for="temperature">体温 (°C)</label>
+                            <input type="number" id="temperature" step="0.1" placeholder="36.5">
+                        </div>
+                        <div class="form-group">
+                            <label for="respiratory-rate">呼吸频率 (次/分)</label>
+                            <input type="number" id="respiratory-rate" placeholder="12-20">
+                        </div>
+                    </div>
+                </div>
+
+                <button class="diagnose-btn" onclick="performDiagnosis()">
+                    <i class="fas fa-stethoscope"></i> 开始智能诊断
+                </button>
+
+                <div id="diagnosis-results" class="results-section" style="display: none;">
+                    <h2>诊断结果</h2>
+                    <div id="diagnosis-content"></div>
+                    
+                    <div class="action-buttons">
+                        <button class="action-btn" onclick="generatePrescription()">
+                            <i class="fas fa-pills"></i> 生成处方
+                        </button>
+                        <button class="action-btn" onclick="generateReport()">
+                            <i class="fas fa-file-medical"></i> 生成病历报告
+                        </button>
+                    </div>
+                </div>
+
+                <div id="prescription-results" class="results-section" style="display: none;">
+                    <h2>处方信息</h2>
+                    <div id="prescription-content"></div>
+                </div>
+            </div>
+
+            <div id="tumor-tab" class="tab-content">
+                <div class="upload-section">
+                    <h2>脑部影像上传</h2>
+                    <div class="upload-area" id="upload-area">
+                        <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                        <p>拖拽文件到此处或点击上传</p>
+                        <p class="file-types">支持格式：.nii, .nii.gz, .dcm</p>
+                        <input type="file" id="file-input" accept=".nii,.gz,.dcm" style="display: none;">
+                    </div>
+                    
+                    <div class="clinical-symptoms">
+                        <h3>临床症状（可选）</h3>
+                        <textarea id="clinical-symptoms" rows="3" placeholder="描述与脑肿瘤相关的临床症状，有助于更准确的分析"></textarea>
+                    </div>
+                </div>
+
+                <div id="tumor-loading" class="loading-section" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>正在分析脑部影像，请稍候...</p>
+                </div>
+
+                <div id="tumor-results" class="results-section" style="display: none;">
+                    <h2>脑肿瘤检测结果</h2>
+                    <div class="tumor-visualization">
+                        <div class="slice-viewer">
+                            <img id="tumor-slice" src="" alt="脑部切片">
+                            <div class="slice-controls">
+                                <button onclick="changeSlice(-1)"><i class="fas fa-chevron-left"></i></button>
+                                <span id="slice-info">切片 1/1</span>
+                                <button onclick="changeSlice(1)"><i class="fas fa-chevron-right"></i></button>
+                            </div>
+                            <input type="range" id="slice-slider" min="0" max="0" value="0" onchange="updateSlice()">
+                        </div>
+                        <div class="tumor-stats" id="tumor-stats"></div>
+                    </div>
+                    
+                    <div id="tumor-analysis" class="analysis-section"></div>
+                    
+                    <button class="action-btn" onclick="generateTumorReport()">
+                        <i class="fas fa-file-medical"></i> 生成肿瘤分析报告
+                    </button>
+                </div>
+            </div>
+
+            <div id="history-tab" class="tab-content">
+                <h2>诊断历史记录</h2>
+                <div id="diagnosis-history" class="history-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="report-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>选择报告格式</h2>
+            <div class="report-format-options">
+                <button class="format-btn" onclick="downloadReport('pdf')">
+                    <i class="fas fa-file-pdf"></i> PDF格式
+                </button>
+                <button class="format-btn" onclick="downloadReport('docx')">
+                    <i class="fas fa-file-word"></i> Word格式
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/ai_doctor.js') }}"></script>
+</body>
+</html>

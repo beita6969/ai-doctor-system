@@ -1,0 +1,25 @@
+# AI智能医生诊断系统依赖包
+
+# Web框架
+Flask==2.3.3
+Flask-CORS==4.0.0
+Werkzeug==2.3.7
+
+# AI服务
+anthropic==0.25.1
+
+# 文档生成
+python-docx==0.8.11
+reportlab==4.0.4
+
+# 数据处理
+numpy==1.24.3
+
+# 实用工具
+python-dateutil==2.8.2
+Pillow==10.0.1
+
+# 开发工具（可选）
+# pytest==7.4.2
+# black==23.7.0
+# flake8==6.0.0
