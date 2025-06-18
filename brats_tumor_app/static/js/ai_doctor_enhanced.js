@@ -216,12 +216,12 @@ async function generatePrescription() {
         const result = await response.json();
         hideLoading();
         
-        if (result.error) {
-            alert('生成处方失败：' + result.error);
+        if (result.error || !result.success) {
+            alert('生成处方失败：' + (result.error || '未知错误'));
             return;
         }
         
-        currentPrescription = result;
+        currentPrescription = result.prescription;
         displayPrescription();
         
         // 切换到处方页面
