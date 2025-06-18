@@ -113,7 +113,7 @@ async function performDiagnosis() {
         const diagnosisTextDiv = contentDiv.querySelector('.diagnosis-text');
         
         // 使用流式接口
-        const response = await fetch('/diagnose_stream', {
+        const response = await fetch('/api/diagnose/stream', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -205,7 +205,7 @@ async function generatePrescription() {
     try {
         showLoading('正在生成处方...');
         
-        const response = await fetch('/prescribe', {
+        const response = await fetch('/api/prescribe', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -453,7 +453,7 @@ async function downloadReport(format) {
     try {
         showLoading('正在生成报告...');
         
-        const response = await fetch('/generate_report', {
+        const response = await fetch('/api/generate_report', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -487,7 +487,7 @@ async function downloadReport(format) {
 // 加载诊断历史
 async function loadDiagnosisHistory() {
     try {
-        const response = await fetch('/diagnosis_history');
+        const response = await fetch('/api/history');
         const result = await response.json();
         
         if (result.error) {
